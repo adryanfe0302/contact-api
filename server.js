@@ -23,6 +23,8 @@ app.use(express.json())
 // use this to parse body get from client
 
 app.use("/api/contacts", require("./routes/contactRoutes"))
+app.use("/api/users", require("./routes/userRoutes"))
+app.use("/api/stacks", require("./routes/stacksRoutes"))
 
 // use this for handling the error
 app.use(errorHandler)
