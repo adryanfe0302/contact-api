@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js",
+    "start": "cp .env.sit .env && node server.js",
     "dev": "cp .env.sit .env && nodemon server.js",
     "uat": "cp .env.uat .env && nodemon server.js"
   },
