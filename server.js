@@ -9,7 +9,7 @@ const app = express()
 const port = process.env.PORT || 3001
 
 app.get('/', (req, res) => {
-  res.send('Hello World!')
+  res.send('Hello Worlds!')
 })
 
 // app.get('/api/contact', (req,res) => {
@@ -25,6 +25,7 @@ app.use(express.json())
 app.use("/api/contacts", require("./routes/contactRoutes"))
 app.use("/api/users", require("./routes/userRoutes"))
 app.use("/api/stacks", require("./routes/stacksRoutes"))
+app.use("/api/jobs", require("./routes/jobRoutes"))
 
 // use this for handling the error
 app.use(errorHandler)
