@@ -11,13 +11,15 @@ const {
     deleteSome
 } = require('../controllers/contactController.js')
 
-// for all need validatetoken just use this
-router.use(validateToken)
-// for all need validatetoken just use this
+
 
 
 
 router.route("/").get(getContact)
+
+// for all need validatetoken just use this
+router.use(validateToken)
+// for all need validatetoken just use this
 
 router.route("/:id").get(getDetailContact)
 
