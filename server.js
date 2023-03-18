@@ -6,7 +6,7 @@ const dotenv = require("dotenv").config()
 connectDb()
 
 const app = express()
-const port = process.env.PORT || process.env.PORTALT
+const port = process.env.PORT || 3000
 
 app.get('/', (req, res) => {
   res.send('Hello Worlds!')
