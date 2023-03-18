@@ -12,7 +12,7 @@ const {
 } = require('../controllers/contactController.js')
 
 // for all need validatetoken just use this
-// router.use(validateToken)
+router.use(validateToken)
 // for all need validatetoken just use this
 
 
