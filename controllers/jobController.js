@@ -8,7 +8,6 @@ const jobLists = asyncHandler(async (req, res) => {
 });
 
 const createJob = asyncHandler(async (req, res) => {
-    
     const { job_title, job_req, likes } = req.body
     console.log('goes here');
     if( !job_title || !job_req || !likes ){
