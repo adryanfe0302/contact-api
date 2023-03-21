@@ -14,9 +14,11 @@ const createJob = asyncHandler(async (req, res) => {
         res.status(400)
         throw new Error("job title, req, or like is mandatory")
     }
-
+    console.log('test', req.body)
+  
     let jobs = {...req.body}
     jobs.user_id = req.user.id
+    console.log('test2', jobs)
     const job = await Job.create(jobs)
 
     res.status(201).json(job)

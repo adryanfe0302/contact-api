@@ -26,6 +26,7 @@ app.use("/api/contacts", require("./routes/contactRoutes"))
 app.use("/api/users", require("./routes/userRoutes"))
 app.use("/api/stacks", require("./routes/stacksRoutes"))
 app.use("/api/jobs", require("./routes/jobRoutes"))
+app.use("/api/elections", require("./routes/electionRoutes"))
 
 // use this for handling the error
 app.use(errorHandler)
