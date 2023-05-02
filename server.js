@@ -1,11 +1,15 @@
 const express = require('express')
+var cors = require('cors')
 const errorHandler = require('./middleware/errorHandler')
 const connectDb = require('./config/dbConnection')
 const dotenv = require("dotenv").config()
 
 connectDb()
 
+
+
 const app = express()
+app.use(cors())
 const port = process.env.PORT || 3000
 
 app.get('/', (req, res) => {

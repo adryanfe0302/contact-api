@@ -1,5 +1,19 @@
 const mongoose = require("mongoose");
 
+const detailCandidate = mongoose.Schema({
+    name: {
+        type: String,
+        required: [true, "Please add name"]
+    },
+    status: {
+        type: String,
+        required: [true, "Please add status candidate"]
+    },
+    images: {
+        type: String,
+        required: [false]
+    }
+})
 
 const candidateSchema = mongoose.Schema({
     user_id: {
@@ -7,15 +21,21 @@ const candidateSchema = mongoose.Schema({
         require: true,
         ref: "User"
     },
-    president: {
-        type: String,
-        required: [true, "Please add name"]
-    },
-    vicePresident: {
-        type: String,
-        required: [true, "Please add status candidate"]
-    },
+    president: detailCandidate,
+    vicePresident: detailCandidate,
     votes: {
+        type: Number,
+        required: [false]
+    },
+    comments: {
+        type: [String],
+        required: [false, "comment is mandatory"]
+    },
+    pageno: {
+        type: Number,
+        required: [false]
+    },
+    pageoption: {
         type: Number,
         required: [false]
     }
@@ -23,4 +43,24 @@ const candidateSchema = mongoose.Schema({
     timestamps: true,
 })
 
-module.exports = mongoose.model("Candidates", candidateSchema);
+const candidateObjectSchema = mongoose.Schema({
+    listCandidate: candidateSchema,
+    total: {
+        type: Number,
+        required: [false, "total candidate"]
+    }
+})
+
+const Candidate = mongoose.model(
+    "Candidate", candidateSchema,
+);
+
+const CandidateObject = mongoose.model(
+    "CandidatesObject", candidateObjectSchema
+);
+
+
+
+module.exports = {
+    Candidate, CandidateObject
+}

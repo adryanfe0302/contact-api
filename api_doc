@@ -1,0 +1,76 @@
+
+
+//--- PUBLIC
+
+localhost:3000/api/users/login
+
+{
+    "email": "seiko@gmail.com",
+    "password": "123"
+}
+
+-------------------------------------------
+
+localhost:3000/api/users/register
+
+{
+    "email": "seiko2@gmail.com",
+    "password": "123",
+    "username": "seiko2"
+}
+
+
+
+
+//-- PRIVATE API
+
+// GET 
+
+localhost:3000/api/elections/candidate
+-------------------------------------------
+
+localhost:3000/api/elections/
+-------------------------------------------
+
+localhost:3000/api/users/current
+-------------------------------------------
+
+
+// POST
+
+// to vote president and vicepresident
+
+localhost:3000/api/elections/votes
+
+{
+    "president": "64195cab8c550c5692072bef",
+    "vicePresident": "6419602d2d5c50612c621ac5"
+}
+
+-------------------------------------------
+
+// to create list dropdown candidate
+
+localhost:3000/api/elections
+
+{
+    "name": "Andika Perkasa",
+    "status": "Panglima TNI 2021-2022",
+    "images": ""
+}
+
+
+// PUT
+
+// to increament vote 
+localhost:3000/api/elections/votes/{id candidate president & vise president}
+
+
+
+// DELETE
+
+// delete all candidate
+localhost:3000/api/elections/deletecandidate
+
+// delete one of candidate from dropdrown
+localhost:3000/api/elections/deletefromelection/{id candidate list}

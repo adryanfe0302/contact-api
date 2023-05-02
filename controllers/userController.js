@@ -59,7 +59,8 @@ const loginUser = asyncHandler(async (req,res) => {
             process.env.ACCESS_TOKEN_ID,
             { expiresIn: "1h" }
         )
-        res.status(200).json({ accessToken })
+        res.status(200).json({ 
+            accessToken })
     } else {
         res.status(401)
         throw new Error('email or password not valid')
@@ -69,7 +70,8 @@ const loginUser = asyncHandler(async (req,res) => {
 })
 
 const currentUser = asyncHandler(async (req,res) => {
-    res.json(req.user)
+    console.log('authheader 5', req.user);
+    res.status(200).json(req.user)
 })
 
 

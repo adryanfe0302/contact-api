@@ -3,17 +3,17 @@ const Election = require("../models/electionModel")
 
 const electionVote = asyncHandler(async (req, res) => {
     const election = await Election.find()
-    console.log('stacks', election);
     res.status(200).json(election)
 });
 
 const createCandidate = asyncHandler(async (req, res) => {
     const { name, status } = req.body
+    console.log('body', req.body);
     if( !name || !status ){
         res.status(400)
         throw new Error("name, & status is mandatory")
     }
-    if(req.body.images === "" || req.boyd.images === null){
+    if(req.body.images === "" || req.body.images === null){
         req.body.images = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSYA0StKR6zPsiDKElNE_yeeylY_xvUcqEYBg&usqp=CAU"
     }
     const candidate = await Election.create(req.body)
@@ -28,6 +28,8 @@ const createCandidatePresident = asyncHandler(async (req, res) => {
         res.status(400)
         throw new Error("president, & vicePresident is mandatory")
     }
+
+
  
     const candidateSelection = await Election.create(req.body)
 
