@@ -8,7 +8,6 @@ const electionVote = asyncHandler(async (req, res) => {
 
 const createCandidate = asyncHandler(async (req, res) => {
     const { name, status } = req.body
-    console.log('body', req.body);
     if( !name || !status ){
         res.status(400)
         throw new Error("name, & status is mandatory")
@@ -23,7 +22,6 @@ const createCandidate = asyncHandler(async (req, res) => {
 
 const createCandidatePresident = asyncHandler(async (req, res) => {
     const { president, vicePresident } = req.body
-
     if( !president || !vicePresident ){
         res.status(400)
         throw new Error("president, & vicePresident is mandatory")

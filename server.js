@@ -31,6 +31,10 @@ app.use("/api/users", require("./routes/userRoutes"))
 app.use("/api/stacks", require("./routes/stacksRoutes"))
 app.use("/api/jobs", require("./routes/jobRoutes"))
 app.use("/api/elections", require("./routes/electionRoutes"))
+app.use("/api/provinces", require("./routes/proviceRoutes"))
+
+// form for send questions
+app.use("/api/contactform", require("./routes/contactfromRoutes"))
 
 // use this for handling the error
 app.use(errorHandler)

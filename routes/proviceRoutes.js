@@ -1,6 +1,6 @@
 const express = require("express");
 
-const { createCandidatePresident } = require("../controllers/electionController");
+const { provinceList, provinceAdd } = require("../controllers/provinceController");
 
 //check token is valid or no
 // const validateToken = require("../middleware/validateToken");
@@ -13,8 +13,7 @@ const router = express.Router()
 // router.use(validateToken)
 // for all need validatetoken just use this
 
-
-// router.post("/votes", createCandidatePresident)
-// router.put("/:id", likeJob)
+router.get("/", provinceList)
+router.post("/", provinceAdd)
 
 module.exports = router

@@ -4,20 +4,26 @@ const ListCandidate = require("../models/electionModel")
 
 
 const candidateList = asyncHandler(async (req, res) => {
-    const candidate = await Candidate.find();
-    const pageNumber = candidate.length / 10
 
-    // to get page number possible from params or body
-    const pageNo = req.params.id * 10 - 10 || req.body.pageno * 10 - 10
+    const candidate = await Candidate.find();
+   
+    const pageno = candidate.length / req.body.pageoption
+
+    const keyword = req.body.keyword || ''
 
     const listCandidate =  await Candidate.find()
+    .limit(req.body.pageoption * 1).skip((req.body.pageno - 1) * req.body.pageoption)
+
+    
+    const searchCandidate = candidate.filter(c => c.president.name.toLowerCase().includes(keyword.toLowerCase()));
+    
 
     const objCandiate = {
-        "listCandidate": listCandidate,
+        "listCandidate": keyword ? searchCandidate : listCandidate,
         "totalCandidate": candidate.length,
-        "pageNo": pageNo,
         "pageOption": req.body.pageoption || 10,
-        "pageNumber": Math.ceil(pageNumber)
+        "totalpage": Math.ceil(pageno),
+        "keyword": keyword
     }
 
     res.status(200).json(objCandiate)
@@ -26,7 +32,8 @@ const candidateList = asyncHandler(async (req, res) => {
 
 const createCandidatePresident = asyncHandler(async (req, res) => {
     const { president, vicePresident, comments } = req.body
-    console.log('works', req.body);
+
+
     if( !president || !vicePresident ){
         res.status(400)
         throw new Error("president, & vicePresident is mandatory")
@@ -42,6 +49,7 @@ const createCandidatePresident = asyncHandler(async (req, res) => {
         throw new Error("president, & vicePresident not in the lists")
     }
 
+
     // const preventDuplicateCandidate = 
     // prevent duplicate same president and vice president here
     
@@ -56,8 +64,8 @@ const createCandidatePresident = asyncHandler(async (req, res) => {
             "status": vicepresidentCandidates.status,
             "images": vicepresidentCandidates.images
         },
-        "votes": 1,
-        comments
+        comments,
+        "votes": 1
     })
 
     res.status(201).json(candidates)
