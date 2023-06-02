@@ -31,7 +31,7 @@ const candidateList = asyncHandler(async (req, res) => {
 
 
 const createCandidatePresident = asyncHandler(async (req, res) => {
-    const { president, vicePresident, comments } = req.body
+    const { president, vicePresident, comments, votes } = req.body
 
 
     if( !president || !vicePresident ){
@@ -52,7 +52,7 @@ const createCandidatePresident = asyncHandler(async (req, res) => {
 
     // const preventDuplicateCandidate = 
     // prevent duplicate same president and vice president here
-    
+    console.log('candidates1', votes);
     const candidates = await Candidate.create({
         "president": {
             "name": presidentCandidates.name,
@@ -65,9 +65,9 @@ const createCandidatePresident = asyncHandler(async (req, res) => {
             "images": vicepresidentCandidates.images
         },
         comments,
-        "votes": 1
+        "votes": votes || 1
     })
-
+    console.log('candidates2', candidates);
     res.status(201).json(candidates)
 });
 

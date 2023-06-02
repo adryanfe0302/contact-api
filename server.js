@@ -3,6 +3,7 @@ var cors = require('cors')
 const errorHandler = require('./middleware/errorHandler')
 const connectDb = require('./config/dbConnection')
 const dotenv = require("dotenv").config()
+// const ejs = require("ejs")
 
 connectDb()
 
@@ -10,11 +11,15 @@ connectDb()
 
 const app = express()
 app.use(cors())
+app.use(express.urlencoded({ extended: false }));
 const port = process.env.PORT || 3000
+
+app.set("view engine", "ejs")
 
 app.get('/', (req, res) => {
   res.send('Hello Worlds!')
 })
+
 
 // app.get('/api/contact', (req,res) => {
 //     // res.send('all contact goes here')
@@ -32,6 +37,7 @@ app.use("/api/stacks", require("./routes/stacksRoutes"))
 app.use("/api/jobs", require("./routes/jobRoutes"))
 app.use("/api/elections", require("./routes/electionRoutes"))
 app.use("/api/provinces", require("./routes/proviceRoutes"))
+app.use("/api/upload", require("./routes/uploadRoutes"))
 
 // form for send questions
 app.use("/api/contactform", require("./routes/contactfromRoutes"))

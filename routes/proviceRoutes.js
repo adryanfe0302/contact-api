@@ -1,6 +1,6 @@
 const express = require("express");
 
-const { provinceList, provinceAdd } = require("../controllers/provinceController");
+const { provinceList, provinceAdd, movieList } = require("../controllers/provinceController");
 
 //check token is valid or no
 // const validateToken = require("../middleware/validateToken");
@@ -15,5 +15,6 @@ const router = express.Router()
 
 router.get("/", provinceList)
 router.post("/", provinceAdd)
+
 
 module.exports = router

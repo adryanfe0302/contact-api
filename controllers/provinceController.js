@@ -26,6 +26,8 @@ const provinceAdd = asyncHandler(async (req,res) => {
 
     res.status(201).json(insertProvince)
 })
+
+
 module.exports = {
     provinceList,
     provinceAdd

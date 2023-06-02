@@ -24,12 +24,7 @@ const getDetailContact = asyncHandler(async(req, res) => {
 });
 
 const createContact = asyncHandler(async (req, res) => {
-    console.log('req', req.body);
-    // if(req.body.age >= 17) {
-    //     res.status(201).json({ message: 'create here big'})
-    // } else {
-    //     res.status(201).json({ message: 'create here small'})
-    // }
+
     const {name,email,phone} = req.body 
     if(!name || !email || !phone){
         res.status(400)
