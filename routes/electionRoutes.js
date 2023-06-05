@@ -19,7 +19,7 @@ router.use(validateToken)
 router.get("/", electionVote)
 router.post("/", createCandidate)
 
-router.get("/candidate", candidateList)
+router.post("/candidate", candidateList)
 router.get("/candidate/pageno/:id", candidateList)
 router.post("/votes", createCandidatePresident)
 router.delete("/deletecandidate", deleteAllCandidate)

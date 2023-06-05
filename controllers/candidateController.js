@@ -16,7 +16,7 @@ const candidateList = asyncHandler(async (req, res) => {
 
     
     const searchCandidate = candidate.filter(c => c.president.name.toLowerCase().includes(keyword.toLowerCase()));
-    
+    console.log('keyword 2', req.body)
 
     const objCandiate = {
         "listCandidate": keyword ? searchCandidate : listCandidate,

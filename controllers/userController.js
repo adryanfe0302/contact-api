@@ -70,7 +70,7 @@ const loginUser = asyncHandler(async (req,res) => {
 })
 
 const currentUser = asyncHandler(async (req,res) => {
-    console.log('authheader 5', req.user);
+    // console.log('authheader 5', req.user);
     res.status(200).json(req.user)
 })
 
