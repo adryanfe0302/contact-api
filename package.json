@@ -10,7 +10,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
     "dev": "cp .env.sit .env && nodemon server.js",
-    "uat": "cp .env.uat .env && nodemon server.js"
+    "uat": "cp .env.uat .env && nodemon server.js",
+    "build": "init"
   },
   "author": "adryan",
   "license": "ISC",
