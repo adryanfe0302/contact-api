@@ -15,8 +15,8 @@ const candidateList = asyncHandler(async (req, res) => {
     .limit(req.body.pageoption * 1).skip((req.body.pageno - 1) * req.body.pageoption)
 
     
-    const searchCandidate = candidate.filter(c => c.president.name.toLowerCase().includes(keyword.toLowerCase()));
-    console.log('keyword 2', req.body)
+    const searchCandidate = candidate.filter(c => c.president.name.toLowerCase().includes(keyword.toLowerCase()) || c.vicePresident.name.toLowerCase().includes(keyword.toLowerCase()));
+
 
     const objCandiate = {
         "listCandidate": keyword ? searchCandidate : listCandidate,
@@ -76,9 +76,20 @@ const deleteAllCandidate = asyncHandler(async(req, res) => {
     res.status(200).json(deleteAll)
 })
 
+const deleteSelectedCandidate = asyncHandler(async(req, res) => {
+    // const deleteAll = await Candidate.deleteMany()
+    // res.status(200).json(deleteAll)
+    const selectedCandidate = await Candidate.findById(req.params.id)
+    if(!selectedCandidate){
+        res.status(400)
+        throw new Error('Id not found')
+    }
+    await selectedCandidate.deleteOne({_id: req.params.id});
+    res.status(200).json(selectedCandidate)
+})
+
 const deleteFromelection = asyncHandler(async(req, res) => {
     const selectedCandidate = await ListCandidate.findById(req.params.id)
-    console.log('deleteFromelection', selectedCandidate);
     if(!selectedCandidate){
         res.status(400)
         throw new Error('Id not found')
@@ -140,6 +151,7 @@ module.exports = {
     createCandidatePresident,
     candidateList,
     deleteAllCandidate,
+    deleteSelectedCandidate,
     voteCandidate,
     deleteFromelection
 }

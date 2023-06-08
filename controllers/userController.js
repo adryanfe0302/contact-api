@@ -4,8 +4,8 @@ const jwt = require("jsonwebtoken")
 const User = require("../models/userModel")
 
 const registerUser = asyncHandler(async (req,res) => {
-    const { username, email, password } = req.body;
-    console.log('user', req.body);
+    const { username, email, password, role } = req.body;
+
     if(!username || !email || !password){
         res.status(400)
         throw new Error(`all field is mandatory`)
@@ -18,22 +18,26 @@ const registerUser = asyncHandler(async (req,res) => {
     }
     const hashpassword = await bcrypt.hash(password, 10)
     console.log('hashpassword', hashpassword);
+    console.log('role', role);
 
     const user = await User.create({
         username,
         email,
-        password: hashpassword
+        password: hashpassword,
+        role: role || 'user'
     })
 
     if(user){
         res.status(201).json({
-            _id:user.id, email: user.email
+            _id:user.id, 
+            email: user.email,
+            role: user.role || 'user'
         })
     } else {
         res.status(400)
         throw new Error('user not valid')
     }
-    // res.json(user)
+    res.json(user)
 })
 
 
@@ -45,8 +49,7 @@ const loginUser = asyncHandler(async (req,res) => {
     }
 
     const user = await User.findOne({ email })
-    console.log('pas1', password);
-    // console.log('pas2', await User.find());
+
     if(user && (await bcrypt.compare(password, user.password))){
         
         const accessToken = jwt.sign({
@@ -70,8 +73,16 @@ const loginUser = asyncHandler(async (req,res) => {
 })
 
 const currentUser = asyncHandler(async (req,res) => {
-    // console.log('authheader 5', req.user);
-    res.status(200).json(req.user)
+
+    const currentUser = await User.findById(req.user.id)
+    const returnData = {
+        email: currentUser.email,
+        role: currentUser.role || 'user',
+        username: currentUser.username 
+    }
+    res.status(200).json(returnData)
+
+    // res.status(200).json(req.user)
 })
 
 

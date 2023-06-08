@@ -2,7 +2,7 @@ const express = require("express");
 
 const { electionVote, createCandidate } = require("../controllers/electionController");
 
-const { createCandidatePresident, candidateList, deleteAllCandidate, voteCandidate, deleteFromelection } = require("../controllers/candidateController");
+const { createCandidatePresident, candidateList, deleteAllCandidate, voteCandidate, deleteFromelection, deleteSelectedCandidate } = require("../controllers/candidateController");
 
 //check token is valid or no
 const validateToken = require("../middleware/validateToken");
@@ -23,6 +23,7 @@ router.post("/candidate", candidateList)
 router.get("/candidate/pageno/:id", candidateList)
 router.post("/votes", createCandidatePresident)
 router.delete("/deletecandidate", deleteAllCandidate)
+router.delete("/deleteselectedcandidate/:id", deleteSelectedCandidate)
 router.delete("/deletefromelection/:id", deleteFromelection)
 router.put("/votes/:id", voteCandidate)
 
