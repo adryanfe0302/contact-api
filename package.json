@@ -3,12 +3,14 @@
   "version": "1.0.0",
   "description": "explore",
   "main": "index.js",
+  "engine: {
+    "node: "18.x"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
     "dev": "cp .env.sit .env && nodemon server.js",
-    "uat": "cp .env.uat .env && nodemon server.js",
-    "build": "init"
+    "uat": "cp .env.uat .env && nodemon server.js"
   },
   "author": "adryan",
   "license": "ISC",
