@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js",
     "dev": "cp .env.sit .env && nodemon index.js",
-    "uat": "cp .env.uat .env && nodemon index.js"
+    "uat": "cp .env.uat .env && nodemon index.js",
+    "build": "netlify deploy--prod"
   },
   "author": "adryan",
   "license": "ISC",
@@ -21,9 +22,10 @@
     "jsonwebtoken": "^9.0.0",
     "mongoose": "^7.0.1",
     "multer": "^1.4.5-lts.1",
-    "nodemon": "^2.0.21"
+    "netlify-lambda": "^2.0.16",
+    "nodemon": "^2.0.21",
+    "serverless-http": "^3.2.0"
   },
-  "devDependencies": {},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/adryanfe0302/contact-api.git"
