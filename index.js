@@ -12,7 +12,7 @@ connectDb()
 const app = express()
 app.use(cors())
 app.use(express.urlencoded({ extended: false }));
-const port = "https://contact-caon5kolt-adryanfe0302.vercel.app/"
+const port = process.env.PORTALT || 3000
 
 app.set("view engine", "ejs")
 
