@@ -7,8 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js",
     "dev": "cp .env.sit .env && nodemon index.js",
-    "uat": "cp .env.uat .env && nodemon index.js",
-    "build": "netlify deploy--prod"
+    "uat": "cp .env.uat .env && nodemon index.js"
   },
   "author": "adryan",
   "license": "ISC",
@@ -22,10 +21,7 @@
     "jsonwebtoken": "^9.0.0",
     "mongoose": "^7.0.1",
     "multer": "^1.4.5-lts.1",
-    "netlify-cli": "^15.4.1",
-    "netlify-lambda": "^2.0.16",
-    "nodemon": "^2.0.21",
-    "serverless-http": "^3.2.0"
+    "nodemon": "^2.0.21"
   },
   "repository": {
     "type": "git",
