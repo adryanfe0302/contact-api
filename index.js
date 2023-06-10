@@ -12,7 +12,7 @@ connectDb()
 const app = express()
 app.use(cors())
 app.use(express.urlencoded({ extended: false }));
-const port = process.env.PORTALT || 3000
+const port = process.env.PORT || 3000
 
 app.set("view engine", "ejs")
 
