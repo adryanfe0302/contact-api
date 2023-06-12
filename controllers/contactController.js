@@ -15,7 +15,7 @@ const getContact = asyncHandler(async (req, res) => {
 const getDetailContact = asyncHandler(async(req, res) => {
     const contact = await Contact.findById(req.params.id)
     // res.status(200).json({ message: `view here ${req.params.id}`})
-
+    console.log('contact', contact);
     if(!contact){
         res.status(400)
         throw new Error('Contact not found')

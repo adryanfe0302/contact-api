@@ -15,6 +15,22 @@ const detailCandidate = mongoose.Schema({
     }
 })
 
+const commentDetail = mongoose.Schema({
+    message: {
+        type: String,
+        required: [false, "Please add message"]
+    },
+    from_id: {
+        type: String,
+        required: [false, "Please add like"]
+    },
+    from_user: {
+        type: String,
+        required: [false, "Please add like"]
+    },
+    
+})
+
 const candidateSchema = mongoose.Schema({
     user_id: {
         type: mongoose.Schema.Types.ObjectId,
@@ -27,10 +43,7 @@ const candidateSchema = mongoose.Schema({
         type: Number,
         required: [false]
     },
-    comments: {
-        type: [String],
-        required: [false, "comment is mandatory"]
-    },
+    comments: [commentDetail],
     pageno: {
         type: Number,
         required: [false]

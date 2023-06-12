@@ -1,5 +1,6 @@
 const asyncHandler = require("express-async-handler")
 const { Candidate } = require("../models/candidateModel")
+const User = require("../models/userModel")
 const ListCandidate = require("../models/electionModel")
 
 
@@ -16,9 +17,9 @@ const candidateList = asyncHandler(async (req, res) => {
 
     
     const searchCandidate = candidate.filter(c => c.president.name.toLowerCase().includes(keyword.toLowerCase()) || c.vicePresident.name.toLowerCase().includes(keyword.toLowerCase()));
+    
 
-
-    const objCandiate = {
+    const objCandidate = {
         "listCandidate": keyword ? searchCandidate : listCandidate,
         "totalCandidate": candidate.length,
         "pageOption": req.body.pageoption || 10,
@@ -26,8 +27,16 @@ const candidateList = asyncHandler(async (req, res) => {
         "keyword": keyword
     }
 
-    res.status(200).json(objCandiate)
+    res.status(200).json(objCandidate)
 });
+
+
+const detailCandidate = asyncHandler(async (req, res) => {
+
+    const candidate = await Candidate.findById(req.params.id);
+    res.status(200).json(candidate)
+});
+
 
 
 const createCandidatePresident = asyncHandler(async (req, res) => {
@@ -52,7 +61,6 @@ const createCandidatePresident = asyncHandler(async (req, res) => {
 
     // const preventDuplicateCandidate = 
     // prevent duplicate same president and vice president here
-    console.log('candidates1', votes);
     const candidates = await Candidate.create({
         "president": {
             "name": presidentCandidates.name,
@@ -101,30 +109,63 @@ const deleteFromelection = asyncHandler(async(req, res) => {
 })
 
 const voteCandidate = asyncHandler(async(req, res) => {
-    console.log('req', req.params.id)
+    console.log('params id', req.params.id)
     const findCandidate  = await Candidate.findById(req.params.id)
 
     if(!Candidate){
         res.status(400)
         throw new Error('candidate not exist on db')
     }
-   
+
+    const arrComment = findCandidate.comments
+    arrComment.push(
+        { 
+            message: "so powerful",
+            like: 2
+        }
+    )
+    console.log('arrComment', arrComment);
 
     const updateVotes = await Candidate.findByIdAndUpdate(
         req.params.id,
         {
-            "votes": findCandidate.votes + 1
+            "votes": findCandidate.votes + 1,
+            "comments": arrComment
         },
         {new: true}
     )
 
-    console.log('update', findCandidate.votes += 1);
+    res.status(200).json(updateVotes)
+    
+})
 
+
+const commentCandidate = asyncHandler(async(req, res) => {
+    const findCandidate  = await Candidate.findById(req.params.id)
+    if(!Candidate){
+        res.status(400)
+        throw new Error('candidate not exist on db')
+    }
+    console.log('user', req.user);
+    const arrComment = findCandidate.comments
+    arrComment.push(
+        { 
+            message: req.body.message || '',
+            from_id: req.user.id,
+            from_user: req.user.username || ''
+        }
+    )
+
+    const updateVotes = await Candidate.findByIdAndUpdate(
+        req.params.id,
+        {
+            "comments": arrComment,
+        },
+        {new: true}
+    )
 
     res.status(200).json(updateVotes)
     
-
-
 })
 
 
@@ -153,5 +194,7 @@ module.exports = {
     deleteAllCandidate,
     deleteSelectedCandidate,
     voteCandidate,
-    deleteFromelection
+    deleteFromelection,
+    commentCandidate,
+    detailCandidate
 }
