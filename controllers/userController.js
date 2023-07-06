@@ -2,6 +2,8 @@ const asyncHandler = require("express-async-handler")
 const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
 const User = require("../models/userModel")
+const nodemailer = require('nodemailer');
+const fs = require('fs');
 
 const registerUser = asyncHandler(async (req,res) => {
     const { username, email, password, role } = req.body;
@@ -69,7 +71,6 @@ const loginUser = asyncHandler(async (req,res) => {
         throw new Error('email or password not valid')
     }
 
-    // res.json(user)
 })
 
 const currentUser = asyncHandler(async (req,res) => {
@@ -85,5 +86,52 @@ const currentUser = asyncHandler(async (req,res) => {
     // res.status(200).json(req.user)
 })
 
+const transporter = nodemailer.createTransport({
+    service: 'Gmail',
+    auth: {
+        user: 'adryanfernandom2@gmail.com',
+        pass: process.env.EMAIL_PASS,
+    },
+    secure: true, // upgrades later with STARTTLS -- change this based on the PORT
+});
 
-module.exports = { registerUser, loginUser, currentUser }
+require.extensions['.html'] = function (module, filename) {
+    module.exports = fs.readFileSync(filename, 'utf8');
+};
+
+const Htmltemplate = require('../email_template/index.html');
+
+const forgotUser = asyncHandler(async (req, res) => {
+    const email = await User.find()
+    const isemailExist = email.filter(item => item.email === req.body.email )
+
+    if(isemailExist.length > 0){
+        // const {to, subject, text } = req.body;
+        const mailData = {
+            from: 'adryanfernandom2@gmail.com',
+            to: req.body.email,
+            subject: 'please verify your email2',
+            text: 'please click link below to verify your email',
+            html: Htmltemplate
+        };
+
+        transporter.sendMail(mailData, (error, info) => {
+            if (error) {
+                console.log('error', error);
+                return console.log(error);
+            }
+         
+            res.status(200).json({
+                status: 'verification already sent to you email',
+                message_id: info.messageId
+            })
+        });
+    } else {
+        res.status(400)
+        throw new Error('email not valid')
+    }
+    
+})
+
+
+module.exports = { registerUser, loginUser, currentUser, forgotUser }

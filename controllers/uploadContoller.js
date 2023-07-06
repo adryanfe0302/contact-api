@@ -4,7 +4,7 @@ const fs = require('fs');
 
 const getUploadImages = asyncHandler(async (req, res) => {
     const image = await Images.find()
-    console.log('get here', image[image.length - 1].image);
+    console.log('get here', image);
     const imageUrl = image[image.length - 1].image
     res.render("uploader", { imageUrl: imageUrl })
     
@@ -13,7 +13,7 @@ const getUploadImages = asyncHandler(async (req, res) => {
 
 const postUploadImages = asyncHandler(async (req, res) => {
 
-    console.log('postUploadImages');
+    // console.log('postUploadImages');
     // console.log('post', req.body);
     // res.status(200).send('images uploaded')
 
@@ -30,7 +30,7 @@ const postUploadImages = asyncHandler(async (req, res) => {
 
     
     
-    console.log('finalImg', finalImg);
+    // console.log('finalImg', Images);
 
 
     const { originalname, buffer, mimetype, path} = req.file
@@ -38,9 +38,9 @@ const postUploadImages = asyncHandler(async (req, res) => {
     // console.log('req', req.file);
     const newImage = new Images({
         contentType: req.file.mimetype,
-        image:  new Buffer(encode_image, 'base64')
+        image: `data:image/jpeg;base64,${encode_image}`
     })
-    console.log('newimage 1', newImage);
+    // console.log('newimage 1', newImage);
     await newImage.save()
     res.status(200).json({
         message: 'Image uploaded successfully'
